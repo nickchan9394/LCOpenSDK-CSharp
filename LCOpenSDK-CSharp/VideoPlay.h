@@ -41,7 +41,7 @@ namespace LCOpenSDK_CSharp
 		[DllImport("LCOpenSDKmd.dll",
 			EntryPoint="?stopRtspReal@LCOpenSDK_VideoPlay@@QAEHXZ",
 			CallingConvention = CallingConvention::ThisCall)]
-		static void stopRtspReal(VideoPlayUnman*);
+		static int stopRtspReal(VideoPlayUnman*);
 
 		[DllImport("LCOpenSDKmd.dll",
 			EntryPoint="?playDeviceRecord@LCOpenSDK_VideoPlay@@QAEHPBD00H0HHH@Z",
@@ -99,8 +99,8 @@ namespace LCOpenSDK_CSharp
 			}
 		}
 
-		void StopRtspReal() {
-			VideoPlayUnman::stopRtspReal(videoPlay);
+		int StopRtspReal() {
+			return VideoPlayUnman::stopRtspReal(videoPlay);
 		}
 
 		int PlayDeviceRecord(String^ token, String^ deviceID, 
