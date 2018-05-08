@@ -44,9 +44,14 @@ namespace LCOpenSDK_CSharp
 		static void stopRtspReal(VideoPlayUnman*);
 
 		[DllImport("LCOpenSDKmd.dll",
-			EntryPoint="?playDeviceRecord@LCOpenSDK_VideoPlay@@QAEHPBD00H0HHH@Z"
+			EntryPoint="?playDeviceRecord@LCOpenSDK_VideoPlay@@QAEHPBD00H0HHH@Z",
 			CallingConvention = CallingConvention::ThisCall)]
 		static int playDeviceRecord(VideoPlayUnman*, const char*, const char*, const char*, int, const char*, int, int, int);
+
+		[DllImport("LCOpenSDKmd.dll",
+			EntryPoint="?stopDeviceRecord@LCOpenSDK_VideoPlay@@QAEHXZ",
+			CallingConvention = CallingConvention::ThisCall)]
+		static int stopDeviceRecord(VideoPlayUnman*);
 	};
 
 	public ref class VideoPlay {
@@ -126,6 +131,11 @@ namespace LCOpenSDK_CSharp
 				Marshal::FreeHGlobal(decryptKeyNativeString);
 				Marshal::FreeHGlobal(fileIDNativeString);
 			}
+		}
+
+		int StopDeviceRecord()
+		{
+			return VideoPlayUnman::stopDeviceRecord(videoPlay);
 		}
 
 	private:
