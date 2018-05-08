@@ -40,7 +40,7 @@ namespace LCOpenSDK_CSharp
 			}
 			finally{
 				Marshal::FreeHGlobal(hostNativeString);
-			Marshal::FreeHGlobal(caPathNativeString);
+				Marshal::FreeHGlobal(caPathNativeString);
 			}
 		}
 
