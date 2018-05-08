@@ -46,7 +46,7 @@ namespace LCOpenSDK_CSharp
 		[DllImport("LCOpenSDKmd.dll",
 			EntryPoint="?playDeviceRecord@LCOpenSDK_VideoPlay@@QAEHPBD00H0HHH@Z",
 			CallingConvention = CallingConvention::ThisCall)]
-		static int playDeviceRecord(VideoPlayUnman*, const char*, const char*, const char*, int, const char*, int, int, int);
+		static int playDeviceRecord(VideoPlayUnman*, const char*, const char*, const char*, int, const char*, long, long, int);
 
 		[DllImport("LCOpenSDKmd.dll",
 			EntryPoint="?stopDeviceRecord@LCOpenSDK_VideoPlay@@QAEHXZ",
@@ -105,7 +105,7 @@ namespace LCOpenSDK_CSharp
 
 		int PlayDeviceRecord(String^ token, String^ deviceID, 
 			String^ decryptKey, int channelID, String^ fileID, 
-			int beginTime, int endTime, int offsetTime) {
+			long long beginTime, long long endTime, int offsetTime) {
 
 			IntPtr tokenNativeString = Marshal::StringToHGlobalAnsi(token);
 			IntPtr deviceIDNativeString = Marshal::StringToHGlobalAnsi(deviceID);
