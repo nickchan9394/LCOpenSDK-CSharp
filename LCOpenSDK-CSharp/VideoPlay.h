@@ -42,6 +42,11 @@ namespace LCOpenSDK_CSharp
 			EntryPoint="?stopRtspReal@LCOpenSDK_VideoPlay@@QAEHXZ",
 			CallingConvention = CallingConvention::ThisCall)]
 		static void stopRtspReal(VideoPlayUnman*);
+
+		[DllImport("LCOpenSDKmd.dll",
+			EntryPoint="?playDeviceRecord@LCOpenSDK_VideoPlay@@QAEHPBD00H0HHH@Z"
+			CallingConvention = CallingConvention::ThisCall)]
+		static int playDeviceRecord(VideoPlayUnman*, const char*, const char*, const char*, int, const char*, int, int, int);
 	};
 
 	public ref class VideoPlay {
@@ -73,16 +78,54 @@ namespace LCOpenSDK_CSharp
 			IntPtr deviceIDNativeString = Marshal::StringToHGlobalAnsi(deviceID);
 			IntPtr decryptKeyNativeString = Marshal::StringToHGlobalAnsi(decryptKey);
 
-			return VideoPlayUnman::playRtspReal(
-				videoPlay,
-				static_cast<char*>(tokenNativeString.ToPointer()),
-				static_cast<char*>(deviceIDNativeString.ToPointer()),
-				static_cast<char*>(decryptKeyNativeString.ToPointer()),
-				channelID, definitionMode);
+			try
+			{
+				return VideoPlayUnman::playRtspReal(
+					videoPlay,
+					static_cast<char*>(tokenNativeString.ToPointer()),
+					static_cast<char*>(deviceIDNativeString.ToPointer()),
+					static_cast<char*>(decryptKeyNativeString.ToPointer()),
+					channelID, definitionMode);
+			}
+			finally{
+				Marshal::FreeHGlobal(tokenNativeString);
+				Marshal::FreeHGlobal(deviceIDNativeString);
+				Marshal::FreeHGlobal(decryptKeyNativeString);
+			}
 		}
 
 		void StopRtspReal() {
 			VideoPlayUnman::stopRtspReal(videoPlay);
+		}
+
+		int PlayDeviceRecord(String^ token, String^ deviceID, 
+			String^ decryptKey, int channelID, String^ fileID, 
+			int beginTime, int endTime, int offsetTime) {
+
+			IntPtr tokenNativeString = Marshal::StringToHGlobalAnsi(token);
+			IntPtr deviceIDNativeString = Marshal::StringToHGlobalAnsi(deviceID);
+			IntPtr decryptKeyNativeString = Marshal::StringToHGlobalAnsi(decryptKey);
+			IntPtr fileIDNativeString = Marshal::StringToHGlobalAnsi(fileID);
+
+			try
+			{
+				return VideoPlayUnman::playDeviceRecord(
+					videoPlay,
+					static_cast<char*>(tokenNativeString.ToPointer()),
+					static_cast<char*>(deviceIDNativeString.ToPointer()),
+					static_cast<char*>(decryptKeyNativeString.ToPointer()),
+					channelID,
+					static_cast<char*>(fileIDNativeString.ToPointer()),
+					beginTime,
+					endTime,
+					offsetTime);
+			}
+			finally{
+				Marshal::FreeHGlobal(tokenNativeString);
+				Marshal::FreeHGlobal(deviceIDNativeString);
+				Marshal::FreeHGlobal(decryptKeyNativeString);
+				Marshal::FreeHGlobal(fileIDNativeString);
+			}
 		}
 
 	private:
