@@ -37,6 +37,11 @@ namespace LCOpenSDK_CSharp
 			EntryPoint = "?playRtspReal@LCOpenSDK_VideoPlay@@QAEHPBD00HH@Z",
 			CallingConvention = CallingConvention::ThisCall)]
 		static int playRtspReal(VideoPlayUnman*, const char*, const char*, const char*, int, int);
+
+		[DllImport("LCOpenSDKmd.dll",
+			EntryPoint="?stopRtspReal@LCOpenSDK_VideoPlay@@QAEHXZ",
+			CallingConvention = CallingConvention::ThisCall)]
+		static void stopRtspReal(VideoPlayUnman*);
 	};
 
 	public ref class VideoPlay {
@@ -74,6 +79,10 @@ namespace LCOpenSDK_CSharp
 				static_cast<char*>(deviceIDNativeString.ToPointer()),
 				static_cast<char*>(decryptKeyNativeString.ToPointer()),
 				channelID, definitionMode);
+		}
+
+		void StopRtspReal() {
+			VideoPlayUnman::stopRtspReal(videoPlay);
 		}
 
 	private:
